@@ -23,7 +23,29 @@ public class Player extends Mob{
 
     @Override
     public void move() {
-        
+        int xa = 0, ya = 0;
+        if (input.up) {
+            sprite = Sprite.player_up_1;
+            ya--;
+        }
+        if (input.down) {
+            sprite = Sprite.player_down_1;
+            ya++;
+        }
+        if (input.right) {
+            sprite = Sprite.player_right_1;
+            xa++;
+        }
+        if (input.left) {
+            sprite = Sprite.player_left_1;
+            xa--;
+        }
+        if (this.x + xa > Game.TILE_SIZE && this.x + xa < 26.4 * Game.TILE_SIZE) {
+            x += xa * speed;
+        }
+        if (this.y + ya > 2 * Game.TILE_SIZE - 0.1 && this.y + ya < 12 * Game.TILE_SIZE + 0.1) {
+            y += ya * speed;
+        }
     }
     
 

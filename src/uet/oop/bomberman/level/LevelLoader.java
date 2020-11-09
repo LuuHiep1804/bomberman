@@ -3,7 +3,7 @@ package uet.oop.bomberman.level;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.Board;
 public abstract class LevelLoader extends LoadLevelExceptions {
-    protected int width = 31, height = 31;
+    protected int width = 20, height = 20;
     protected int level;
     protected Board board;
 
