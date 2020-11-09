@@ -50,9 +50,13 @@ public class Board implements IRender{
         screenShow = i;
     }
 
+    public Keyboard getInput() {
+        return input;
+    }
+
     @Override
     public void update() {
-
+        updateMob();
     }
 
     @Override
@@ -82,10 +86,6 @@ public class Board implements IRender{
         }
     }
 
-    public void drawScreen(Graphics g) {
-        screen.drawChangeLevel(g, levelLoader.getLevel());
-    }
-
     public void addEntity(int pos, Entity e) {
         entities[pos] = e;
     }
@@ -99,5 +99,13 @@ public class Board implements IRender{
 
         while(itr.hasNext())
             itr.next().render(screen);
+    }
+
+    protected void updateMob() {
+        Iterator<Mob> itr = listMob.iterator();
+
+        while(itr.hasNext()) {
+            itr.next().update();
+        }
     }
 }

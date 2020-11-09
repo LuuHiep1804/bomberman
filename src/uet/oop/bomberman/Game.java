@@ -17,30 +17,36 @@ public class Game extends Canvas {
     public static int SCALE = 3;
     public static final String TITLE = "Bomberman";
 
-    protected static int SCREENDELAY = 3;
-    protected int screenDelay = SCREENDELAY;
+//    protected static int SCREENDELAY = 3;
+//    protected int screenDelay = SCREENDELAY;
 
     private Keyboard input;
     private boolean running = false;
-    private boolean paused = true;
+    //    private boolean paused = true;
     private Board board;
     private Screen screen;
     private Frame frame;
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     public Game(Frame frame) {
         this.frame = frame;
         frame.setTitle(TITLE);
         screen = new Screen(WIDTH, HEIGHT);
-        board = new Board(this,input, screen);
+        input = new Keyboard();
+        board = new Board(this, input, screen);
         addKeyListener(input);
+    }
+
+    public void update() {
+        input.update();
+        board.update();
     }
 
     public void renderGame() {
         BufferStrategy bs = getBufferStrategy();
-        if(bs == null) {
+        if (bs == null) {
             createBufferStrategy(3);
             return;
         }
@@ -61,37 +67,22 @@ public class Game extends Canvas {
         bs.show();
     }
 
-    public void renderScreen() {
-        BufferStrategy bs = getBufferStrategy();
-        if(bs == null) {
-            createBufferStrategy(3);
-            return;
-        }
-
-        screen.Clear();
-
-        Graphics g = bs.getDrawGraphics();
-
-        board.drawScreen(g);
-
-        g.dispose();
-        bs.show();
-    }
-
     public void start() {
         running = true;
-        while (running){
-            if(paused) {
-                if(screenDelay <= 0) {
-                    board.setShow(-1);
-                    paused = false;
-                }
-                renderScreen();
-            } else {
-                renderGame();
+        long lastTime = System.nanoTime();
+        final double ns = 1000000000.0 / 60.0;
+        double delta = 0;
+        requestFocus();
+        while (running) {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+
+            while (delta >= 1) {
+                update();
+                delta--;
             }
-            if(board.getShow() == 2)
-                --screenDelay;
+            renderGame();
         }
     }
 }

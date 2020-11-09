@@ -4,16 +4,17 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.mob.Mob;
 import uet.oop.bomberman.graphics.Screen;
 
-public class Enemy extends Mob {
+public abstract class Enemy extends Mob {
 
     public Enemy(int x, int y, Board board) {
         super(x, y, board);
     }
 
     @Override
-    public void update() {
+    public abstract void move();
 
-    }
+    @Override
+    public abstract void update();
 
     @Override
     public void render(Screen screen) {
