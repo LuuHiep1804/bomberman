@@ -13,6 +13,8 @@ public abstract class Mob extends Entity {
         this.board = board;
     }
 
+    public abstract void move();
+
     @Override
     public abstract void update();
 

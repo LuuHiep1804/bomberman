@@ -47,10 +47,16 @@ public class Screen {
             int yb = y + ya;
             for (int x = 0; x < entity.getSprite().getSize(); x++) {
                 int xb = x + xa;
-                if (xb < -entity.getSprite().getSize() || xb >= width || yb < 0 || yb >= height) break;
-                if (xb < 0) xb = 0;
+                if (xb < -entity.getSprite().getSize() || xb >= width || yb < 0 || yb >= height){
+                    break;
+                }
+                if (xb < 0) {
+                    xb = 0;
+                }
                 int col = entity.getSprite().getPixel(x + y * entity.getSprite().getSize());
-                if (col != transparentColor) pixels[xb + yb * width] = col;
+                if (col != transparentColor) {
+                    pixels[xb + yb * width] = col;
+                }
             }
         }
     }
@@ -62,8 +68,12 @@ public class Screen {
             int yb = y + ya;
             for (int x = 0; x < entity.getSprite().getSize(); x++) {
                 int xb = x + xa;
-                if (xb < -entity.getSprite().getSize() || xb >= width || yb < 0 || yb >= height) break;
-                if (xb < 0) xb = 0;
+                if (xb < -entity.getSprite().getSize() || xb >= width || yb < 0 || yb >= height) {
+                    break;
+                }
+                if (xb < 0) {
+                    xb = 0;
+                }
                 int col = entity.getSprite().getPixel(x + y * entity.getSprite().getSize());
                 if (col != transparentColor) {
                     pixels[xb + yb * width] = col;
@@ -79,12 +89,12 @@ public class Screen {
         yOffset = y;
     }
 
-    public void drawChangeLevel(Graphics g, int level) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, getRealWidth(), getRealHeight());
-
-        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
-        g.setFont(font);
-        g.setColor(Color.white);
-    }
+//    public void drawChangeLevel(Graphics g, int level) {
+//        g.setColor(Color.black);
+//        g.fillRect(0, 0, getRealWidth(), getRealHeight());
+//
+//        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+//        g.setFont(font);
+//        g.setColor(Color.white);
+//    }
 }

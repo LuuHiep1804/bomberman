@@ -8,4 +8,14 @@ public class Oneal extends Enemy{
         super(x, y, board);
         sprite = Sprite.oneal_left1;
     }
+
+    @Override
+    public void move() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 }
