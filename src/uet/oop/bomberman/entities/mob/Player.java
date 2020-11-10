@@ -2,13 +2,10 @@ package uet.oop.bomberman.entities.mob;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.entities.tile.Tile;
-import uet.oop.bomberman.entities.tile.WallTile;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
-
-import java.awt.*;
 
 public class Player extends Mob{
 
@@ -40,6 +37,40 @@ public class Player extends Mob{
             sprite = Sprite.player_left_1;
             xa--;
         }
+        for (int i = 0; i < board.listTile.size(); i++) {
+            if (board.listTile.get(i).getX() == x + 12 && board.listTile.get(i).getY() >= y - 13
+                    && board.listTile.get(i).getY() <= y + 12) {
+                if (input.right) {
+                    xa = 0;
+                    ya = 0;
+                    break;
+                }
+            }
+            if (board.listTile.get(i).getX() == x - 16 && board.listTile.get(i).getY() >= y - 13
+                    && board.listTile.get(i).getY() <= y + 12) {
+                if (input.left) {
+                    xa = 0;
+                    ya = 0;
+                    break;
+                }
+            }
+            if (board.listTile.get(i).getX() >= x - 12 && board.listTile.get(i).getX() <= x + 10
+                    && board.listTile.get(i).getY() == y + 15) {
+                if (input.down) {
+                    xa = 0;
+                    ya = 0;
+                    break;
+                }
+            }
+            if (board.listTile.get(i).getX() >= x - 10 && board.listTile.get(i).getX() <= x + 10
+                    && board.listTile.get(i).getY() == y + 16) {
+                if (input.up) {
+                    xa = 0;
+                    ya = 0;
+                    break;
+                }
+            }
+        }
         if (this.x + xa > Game.TILE_SIZE && this.x + xa < 26.4 * Game.TILE_SIZE) {
             x += xa * speed;
         }
@@ -47,7 +78,11 @@ public class Player extends Mob{
             y += ya * speed;
         }
     }
-    
+
+    @Override
+    public void onCollisionEnter(Entity collidingObj) {
+
+    }
 
     @Override
     public void update() {

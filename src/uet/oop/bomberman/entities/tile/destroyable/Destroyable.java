@@ -21,4 +21,8 @@ public class Destroyable extends Tile {
         beLowSprite = sprite;
     }
 
+    @Override
+    public void onCollisionEnter(Entity collidingObj) {
+
+    }
 }

@@ -24,6 +24,11 @@ public class LayeredEntity extends Entity{
     }
 
     @Override
+    public void onCollisionEnter(Entity collidingObj) {
+
+    }
+
+    @Override
     public void update() {
         clearRemoved();
         getTopEntity().update();

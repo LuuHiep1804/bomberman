@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.entities.Entity;
 
 import uet.oop.bomberman.entities.mob.Mob;
+import uet.oop.bomberman.entities.tile.Tile;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -10,7 +11,6 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +24,7 @@ public class Board implements IRender{
 
     public Entity[] entities;
     public List<Mob> listMob = new ArrayList<>();
+    public List<Tile> listTile = new ArrayList<>();
 
     private int screenShow = -1;
 
@@ -94,6 +95,10 @@ public class Board implements IRender{
         listMob.add(e);
     }
 
+    public void addTile(Tile e) {
+        listTile.add(e);
+    }
+
     protected void renderMob(Screen screen) {
         Iterator<Mob> itr = listMob.iterator();
 
@@ -107,5 +112,10 @@ public class Board implements IRender{
         while(itr.hasNext()) {
             itr.next().update();
         }
+    }
+
+    @Override
+    public void onCollisionEnter(Entity collidingObj) {
+
     }
 }
