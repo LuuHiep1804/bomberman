@@ -22,7 +22,7 @@ public class Destroyable extends Tile {
     }
 
     @Override
-    public void onCollisionEnter(Entity collidingObj) {
-
+    public boolean checkCollision() {
+        return true;
     }
 }

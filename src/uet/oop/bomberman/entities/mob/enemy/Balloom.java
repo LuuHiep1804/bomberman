@@ -1,12 +1,13 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.Random;
 
 public class Balloom extends Enemy{
 
-    private double speed = 1.0;
+    private double speed = 0.5;
 
     public Balloom(int x, int y, Board board) {
         super(x, y, board);
@@ -14,17 +15,7 @@ public class Balloom extends Enemy{
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
-    public void onCollisionEnter(Entity collidingObj) {
-
-    }
-
-    @Override
-    public void update() {
-        move();
+    public boolean checkCollision() {
+        return true;
     }
 }

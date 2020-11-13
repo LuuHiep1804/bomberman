@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemy{
@@ -11,17 +10,7 @@ public class Oneal extends Enemy{
     }
 
     @Override
-    public void move() {
-
-    }
-
-    @Override
-    public void onCollisionEnter(Entity collidingObj) {
-
-    }
-
-    @Override
-    public void update() {
-
+    public boolean checkCollision() {
+        return true;
     }
 }

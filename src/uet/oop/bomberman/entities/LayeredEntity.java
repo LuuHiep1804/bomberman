@@ -24,8 +24,8 @@ public class LayeredEntity extends Entity{
     }
 
     @Override
-    public void onCollisionEnter(Entity collidingObj) {
-
+    public boolean checkCollision() {
+        return true;
     }
 
     @Override

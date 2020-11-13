@@ -31,7 +31,7 @@ public class FileLevelLoader extends LevelLoader {
     public void loadLevel(int level) throws LoadLevelExceptions {
         List<String> list = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("C:\\Users\\Nguyen Duc Hoang\\IdeaProjects\\BomBerMan\\bomberman\\res\\levels\\Level1.txt");
+            FileReader fr = new FileReader("res\\levels\\Level" + level + ".txt");
             BufferedReader br = new BufferedReader(fr);
             String line = br.readLine();
             while (!line.equals("")) {
@@ -65,11 +65,9 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     case '#':
                         board.addEntity(pos, new WallTile(x, y, Sprite.wall));
-                        board.addTile(new WallTile(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + 16, Sprite.wall));
                         break;
                     case 'x':
                         board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new PortalTile(x, y, board, Sprite.portal), new WallTile(x, y, Sprite.wall)));
-                        board.addTile(new WallTile(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + 16, Sprite.wall));
                         break;
                     case '*':
                         board.addEntity(x + y * width,
@@ -78,11 +76,10 @@ public class FileLevelLoader extends LevelLoader {
                                         new BrickTile(x, y, Sprite.brick)
                                 )
                         );
-                        board.addTile(new BrickTile(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + 16, Sprite.brick));
                         break;
                     case 'p':
                         board.addMob(new Player(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
-                        Screen.setOffset(0, 0);
+//                        Screen.setOffset(0, 0);
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '1':

@@ -2,6 +2,7 @@ package uet.oop.bomberman;
 
 import uet.oop.bomberman.entities.Entity;
 
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.mob.Mob;
 import uet.oop.bomberman.entities.tile.Tile;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
@@ -11,6 +12,7 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +26,8 @@ public class Board implements IRender{
 
     public Entity[] entities;
     public List<Mob> listMob = new ArrayList<>();
-    public List<Tile> listTile = new ArrayList<>();
+    public List<Bomb> listBomb = new ArrayList<>();
+    public List<Tile> tileList = new ArrayList<>();
 
     private int screenShow = -1;
 
@@ -58,6 +61,7 @@ public class Board implements IRender{
     @Override
     public void update() {
         updateMob();
+        updateBomb();
     }
 
     @Override
@@ -73,6 +77,7 @@ public class Board implements IRender{
             }
         }
         renderMob(screen);
+        renderBomb(screen);
     }
 
 
@@ -91,12 +96,13 @@ public class Board implements IRender{
         entities[pos] = e;
     }
 
-    public void addMob(Mob e) {
-        listMob.add(e);
+    public Entity getTile(double x, double y) {
+        return entities[(int) x + (int) y * levelLoader.getWidth()];
     }
 
-    public void addTile(Tile e) {
-        listTile.add(e);
+    //---------------------------Mob-------------------------------
+    public void addMob(Mob e) {
+        listMob.add(e);
     }
 
     protected void renderMob(Screen screen) {
@@ -114,8 +120,22 @@ public class Board implements IRender{
         }
     }
 
-    @Override
-    public void onCollisionEnter(Entity collidingObj) {
+    //-----------------------------BOMB--------------------------------
+    public void addBomb(Bomb b) {
+        listBomb.add(b);
+    }
 
+    public void renderBomb(Screen screen) {
+        Iterator<Bomb> itr = listBomb.iterator();
+        while(itr.hasNext()) {
+            itr.next().render(screen);
+        }
+    }
+
+    public void updateBomb() {
+        Iterator<Bomb> itr = listBomb.iterator();
+        while (itr.hasNext()) {
+            itr.next().update();
+        }
     }
 }
