@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.entities.mob.enemy.Balloom;
+import uet.oop.bomberman.entities.mob.enemy.Minvo;
 import uet.oop.bomberman.entities.mob.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.GrassTile;
 import uet.oop.bomberman.entities.tile.PortalTile;
@@ -31,7 +32,7 @@ public class FileLevelLoader extends LevelLoader {
     public void loadLevel(int level) throws LoadLevelExceptions {
         List<String> list = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("res\\levels\\Level" + level + ".txt");
+            FileReader fr = new FileReader("C:\\Users\\Nguyen Duc Hoang\\IdeaProjects\\BomBerMan\\bomberman\\res\\levels\\Level" + level + ".txt");
             BufferedReader br = new BufferedReader(fr);
             String line = br.readLine();
             while (!line.equals("")) {
@@ -79,7 +80,7 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     case 'p':
                         board.addMob(new Player(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
-//                        Screen.setOffset(0, 0);
+                        //Screen.setOffset(0, 0);
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '1':
@@ -88,6 +89,10 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     case '2':
                         board.addMob(new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
+                        board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        break;
+                    case '3':
+                        board.addMob(new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
                         break;
                     default:

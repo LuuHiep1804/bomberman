@@ -9,7 +9,7 @@ import uet.oop.bomberman.input.Keyboard;
 
 import java.awt.*;
 
-public class Player extends Mob{
+public class Player extends Mob {
 
     private final int MAX_ANIM = 7500;
 
@@ -29,8 +29,8 @@ public class Player extends Mob{
 
     public void animate() {
         if (anim < MAX_ANIM) {
-            anim ++;
-        }else {
+            anim++;
+        } else {
             anim = 0;
         }
     }
@@ -41,7 +41,6 @@ public class Player extends Mob{
         if (input.up) {
             ya--;
             dir = 0;
-
         }
         if (input.down) {
             ya++;
@@ -59,7 +58,7 @@ public class Player extends Mob{
             x += xa * speed;
             y += ya * speed;
             moving = true;
-        }else {
+        } else {
             moving = false;
         }
     }
@@ -91,11 +90,7 @@ public class Player extends Mob{
                 }
                 break;
             default:
-                sprite = Sprite.player_right;
-                if (moving) {
-                    sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, anim, 20);
-                }
-                break;
+                dir = 1;
         }
     }
 
@@ -117,6 +112,6 @@ public class Player extends Mob{
     @Override
     public void render(Screen screen) {
         chooseSprite();
-        screen.renderEntity((int) x, (int) y - sprite.getSize(), this );
+        screen.renderEntity((int) x, (int) y - sprite.getSize(), this);
     }
 }

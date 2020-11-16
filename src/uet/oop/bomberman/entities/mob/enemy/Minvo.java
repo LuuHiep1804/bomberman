@@ -4,12 +4,11 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Oneal extends Enemy{
-    public Oneal(int x, int y, Board board) {
+public class Minvo extends Enemy {
+    public Minvo(int x, int y, Board board) {
         super(x, y, board);
-        speed = 0.1;
-        moving = false;
-        sprite = Sprite.oneal_left1;
+        speed = 0.2;
+        sprite = Sprite.minvo_left1;
     }
 
     @Override
@@ -28,23 +27,23 @@ public class Oneal extends Enemy{
         super.render(screen);
     }
 
+    @Override
+    public boolean checkCollision() {
+        return true;
+    }
+
     public void chooseSprite() {
         switch (dir) {
             case 0:
-                sprite = Sprite.oneal_left1;
-                sprite = Sprite.movingSprite(Sprite.oneal_left2, Sprite.oneal_left3, anim, 20);
+                sprite = Sprite.minvo_left1;
+                sprite = Sprite.movingSprite(Sprite.minvo_left2, Sprite.minvo_left3, anim, 20);
                 break;
             case 1:
-                sprite = Sprite.oneal_right1;
-                sprite = Sprite.movingSprite(Sprite.oneal_right2, Sprite.oneal_right3, anim, 20);
+                sprite = Sprite.minvo_right1;
+                sprite = Sprite.movingSprite(Sprite.minvo_right2, Sprite.minvo_right3, anim, 20);
                 break;
             default:
                 dir = 1;
         }
-    }
-
-    @Override
-    public boolean checkCollision() {
-        return true;
     }
 }
