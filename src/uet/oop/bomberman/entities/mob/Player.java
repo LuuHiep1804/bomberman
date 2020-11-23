@@ -33,7 +33,7 @@ public class Player extends Mob {
         sprite = Sprite.player_right;
         this.input = board.getInput();
         anim = 0;
-        bombrange = 1;
+        bombrange = 2;
         bombs = board.getBombs();
     }
 
@@ -104,11 +104,12 @@ public class Player extends Mob {
         }
     }
 
+    //------------Bomb-----------------------------------------------------------------------------
     public void placeBomb() {
         if(input.space && timeBetweenPutBombs < 0) {
             int xt = Coordinates.pixelToTile(x + sprite.getSize() / 2);
             int yt = Coordinates.pixelToTile((y + sprite.getSize() / 2) - sprite.getSize());
-            Bomb bomb = new Bomb(xt, yt, board,bombrange);
+            Bomb bomb = new Bomb(xt, yt, board, bombrange);
             board.addBomb(bomb);
             timeBetweenPutBombs = 30;
         }

@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.tile.destroyable.BrickTile;
 import uet.oop.bomberman.graphics.Screen;
 
 public class FlameSegment extends Entity {
@@ -9,7 +10,7 @@ public class FlameSegment extends Entity {
     protected Board board;
     protected int dir;
     private int radius;
-    protected Flame flames;
+    protected Flame[] flames;
 
     public FlameSegment(int x, int y, Board board, int dir, int radius) {
         this.x = x;
@@ -17,27 +18,52 @@ public class FlameSegment extends Entity {
         this.board = board;
         this.radius = radius;
         this.dir = dir;
+        flames = new Flame[caculateRadius()];
         addExplosions();
     }
 
-    private void addExplosions() {
+    public void addExplosions() {
+        boolean last = false;
         int xa = (int)x;
         int ya = (int)y;
-        switch (dir) {
-            case 0:
-                ya--;
-                break;
-            case 1:
-                xa++;
-                break;
-            case 2:
-                ya++;
-                break;
-            case 3:
-                xa--;
-                break;
+        for (int i = 0; i < flames.length; i++) {
+            if (i == flames.length - 1) {
+                last = true;
+            }
+            switch (dir) {
+                case 0:
+                    ya--;
+                    break;
+                case 1:
+                    xa++;
+                    break;
+                case 2:
+                    ya++;
+                    break;
+                case 3:
+                    xa--;
+                    break;
+            }
+            flames[i] = new Flame(xa, ya, board, dir, last);
         }
-        flames = new Flame(xa, ya, board, dir);
+    }
+
+    public int caculateRadius() {
+        int radius = 0;
+        int x = (int) this.x;
+        int y = (int) this.y;
+        while (radius < this.radius) {
+            if (dir == 0) y--;
+            if (dir == 1) x++;
+            if (dir == 2) y++;
+            if (dir == 3) x--;
+            Entity e = board.getTile(x, y);
+            if (e.checkCollision()) {
+                break;
+            }
+            radius++;
+        }
+        return radius;
     }
 
     @Override
@@ -52,6 +78,8 @@ public class FlameSegment extends Entity {
 
     @Override
     public void render(Screen screen) {
-        flames.render(screen);
+        for (int i = 0; i < flames.length; i++) {
+            flames[i].render(screen);
+        }
     }
 }
