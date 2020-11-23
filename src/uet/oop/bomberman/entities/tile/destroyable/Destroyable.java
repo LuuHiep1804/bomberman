@@ -22,6 +22,11 @@ public class Destroyable extends Tile {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public boolean checkCollision() {
         return true;
     }

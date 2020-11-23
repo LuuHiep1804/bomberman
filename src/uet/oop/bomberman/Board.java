@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.entities.Entity;
 
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.mob.Mob;
 import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.entities.tile.Tile;
@@ -29,7 +30,7 @@ public class Board implements IRender{
     public Entity[] entities;
     public List<Mob> listMob = new ArrayList<>();
     public List<Bomb> listBomb = new ArrayList<>();
-    public List<Tile> tileList = new ArrayList<>();
+    public List<Flame> listFlame = new ArrayList<>();
 
     private int screenShow = -1;
 
@@ -80,6 +81,7 @@ public class Board implements IRender{
     public void update() {
         updateMob();
         updateBomb();
+        updateFlame();
     }
 
     @Override
@@ -96,6 +98,7 @@ public class Board implements IRender{
         }
         renderMob(screen);
         renderBomb(screen);
+        renderFlame(screen);
     }
 
 
@@ -143,6 +146,10 @@ public class Board implements IRender{
         listBomb.add(b);
     }
 
+    public List<Bomb> getBombs() {
+        return listBomb;
+    }
+
     public void renderBomb(Screen screen) {
         Iterator<Bomb> itr = listBomb.iterator();
         while(itr.hasNext()) {
@@ -153,6 +160,24 @@ public class Board implements IRender{
     public void updateBomb() {
         Iterator<Bomb> itr = listBomb.iterator();
         while (itr.hasNext()) {
+            itr.next().update();
+        }
+    }
+    //-----------------------------Flame--------------------------------
+    public void addFlame(Flame flame) {
+        listFlame.add(flame);
+    }
+
+    public void renderFlame(Screen screen) {
+        Iterator<Flame> itr = listFlame.iterator();
+        while(itr.hasNext()) {
+            itr.next().render(screen);
+        }
+    }
+
+    public void updateFlame() {
+        Iterator<Flame> itr = listFlame.iterator();
+        while(itr.hasNext()) {
             itr.next().update();
         }
     }
