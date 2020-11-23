@@ -6,8 +6,12 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
+import uet.oop.bomberman.level.Coordinates;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Player extends Mob {
 
@@ -16,15 +20,21 @@ public class Player extends Mob {
     private double speed = 1.0;
     private int dir = -1;
     private int anim;
+    private int bombrange;
     private boolean moving = false;
 
+    protected int timeBetweenPutBombs = 0;
+
     public Keyboard input;
+    public List<Bomb> bombs;
 
     public Player(int x, int y, Board board) {
         super(x, y, board);
         sprite = Sprite.player_right;
         this.input = board.getInput();
         anim = 0;
+        bombrange = 1;
+        bombs = board.getBombs();
     }
 
     public void animate() {
@@ -95,15 +105,34 @@ public class Player extends Mob {
     }
 
     public void placeBomb() {
-        if (input.space) {
-            Bomb bomb = new Bomb((int) x, (int) y, board);
+        if(input.space && timeBetweenPutBombs < 0) {
+            int xt = Coordinates.pixelToTile(x + sprite.getSize() / 2);
+            int yt = Coordinates.pixelToTile((y + sprite.getSize() / 2) - sprite.getSize());
+            Bomb bomb = new Bomb(xt, yt, board,bombrange);
             board.addBomb(bomb);
+            timeBetweenPutBombs = 30;
         }
+    }
+
+    private void clearBombs() {
+        Iterator<Bomb> bs = bombs.iterator();
+
+        Bomb b;
+        while(bs.hasNext()) {
+            b = bs.next();
+            if(b.isRemoved())  {
+                bs.remove();
+            }
+        }
+
     }
 
 
     @Override
     public void update() {
+        clearBombs();
+        if(timeBetweenPutBombs < -7500) timeBetweenPutBombs = 0;
+        else timeBetweenPutBombs--;
         animate();
         move();
         placeBomb();
