@@ -8,11 +8,11 @@ import uet.oop.bomberman.entities.mob.enemy.Balloom;
 import uet.oop.bomberman.entities.mob.enemy.Minvo;
 import uet.oop.bomberman.entities.mob.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.GrassTile;
+import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.entities.tile.PortalTile;
 import uet.oop.bomberman.entities.tile.WallTile;
 import uet.oop.bomberman.entities.tile.destroyable.BrickTile;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
-import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.BufferedReader;
@@ -70,6 +70,10 @@ public class FileLevelLoader extends LevelLoader {
                     case 'x':
                         board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new PortalTile(x, y, board, Sprite.portal), new WallTile(x, y, Sprite.wall)));
                         break;
+                    case 's':
+                        board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new Items(x, y, Sprite.powerup_speed)));
+                        board.setItemAt(pos);
+                        break;
                     case '*':
                         board.addEntity(x + y * width,
                                 new LayeredEntity(x, y,
@@ -79,8 +83,9 @@ public class FileLevelLoader extends LevelLoader {
                         );
                         break;
                     case 'p':
-                        board.addMob(new Player(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
-                        //Screen.setOffset(0, 0);
+                        Player player = new Player(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board);
+                        board.addMob(player);
+                        board.setPlayer(player);
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '1':

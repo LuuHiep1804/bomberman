@@ -4,6 +4,7 @@ import uet.oop.bomberman.entities.Entity;
 
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.mob.Mob;
+import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.entities.tile.Tile;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.graphics.IRender;
@@ -12,7 +13,6 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +23,8 @@ public class Board implements IRender{
     protected Game game;
     protected Keyboard input;
     protected Screen screen;
+    protected Mob player;
+    protected int itemAt;
 
     public Entity[] entities;
     public List<Mob> listMob = new ArrayList<>();
@@ -56,6 +58,22 @@ public class Board implements IRender{
 
     public Keyboard getInput() {
         return input;
+    }
+
+    public Mob getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Mob player) {
+        this.player = player;
+    }
+
+    public int getItemAt() {
+        return itemAt;
+    }
+
+    public void setItemAt(int itemAt) {
+        this.itemAt = itemAt;
     }
 
     @Override

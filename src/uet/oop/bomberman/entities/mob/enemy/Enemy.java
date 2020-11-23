@@ -15,7 +15,6 @@ public abstract class Enemy extends Mob {
     protected int dir = -1;
     protected int anim;
     protected boolean moving;
-    protected boolean moving_2;
 
 
     public Enemy(int x, int y, Board board) {

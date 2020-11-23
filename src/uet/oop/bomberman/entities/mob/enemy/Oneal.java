@@ -7,7 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Oneal extends Enemy{
     public Oneal(int x, int y, Board board) {
         super(x, y, board);
-        speed = 0.1;
+        speed = 0.15;
         moving = false;
         sprite = Sprite.oneal_left1;
     }
@@ -39,7 +39,9 @@ public class Oneal extends Enemy{
                 sprite = Sprite.movingSprite(Sprite.oneal_right2, Sprite.oneal_right3, anim, 20);
                 break;
             default:
-                dir = 1;
+                sprite = Sprite.oneal_right1;
+                sprite = Sprite.movingSprite(Sprite.oneal_right2, Sprite.oneal_right3, anim, 20);
+                break;
         }
     }
 

@@ -3,20 +3,21 @@ package uet.oop.bomberman.entities.mob;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.tile.GrassTile;
+import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
-
-import java.awt.*;
 
 public class Player extends Mob {
 
     private final int MAX_ANIM = 7500;
 
-    private double speed = 1.0;
+    private double speed = 0.5;
     private int dir = -1;
     private int anim;
     private boolean moving = false;
+    private boolean check = true;
 
     public Keyboard input;
 
@@ -37,6 +38,8 @@ public class Player extends Mob {
 
     @Override
     public void move() {
+        double getItemY = board.entities[board.getItemAt()].getY();
+        double getItemX = board.entities[board.getItemAt()].getX();
         int xa = 0, ya = 0;
         if (input.up) {
             ya--;
@@ -60,6 +63,15 @@ public class Player extends Mob {
             moving = true;
         } else {
             moving = false;
+        }
+        if (((getItemX * 16 <= x && getItemX * 16 + 6 >= x) && (getItemY * 16 == y - 2))
+                || ((getItemX * 16 <= x && getItemX * 16 + 6 >= x) && (getItemY * 16 == y - 30))
+                || ((getItemX * 16 == x + 10) && (getItemY * 16 >= y - 18 && getItemY * 16 <= y - 12))
+                || ((getItemX * 16 == x - 17) && (getItemY * 16 >= y - 18 && getItemY * 16 <= y - 12))
+                && check == true) {
+            board.addEntity(board.getItemAt(), new GrassTile((int) getItemX, (int) getItemY, Sprite.grass));
+            speed = 1;
+            check = false;
         }
     }
 
