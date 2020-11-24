@@ -40,14 +40,16 @@ public abstract class Enemy extends Mob {
 
     @Override
     public void move() {
-        if (!tileCollision(speed, 0) && moving == true) {
-            x += speed;
+        if (!tileCollision(1, 0) && moving == true) {
+            x += 1 * speed;
+            y += 0 * speed;
             dir = 0;
         } else {
             moving = false;
         }
-        if (!tileCollision(-speed, 0) && moving == false) {
-            x -= speed;
+        if (!tileCollision(-1, 0) && moving == false) {
+            x += -1 * speed;
+            y += 0 * speed;
             dir = 1;
         } else {
             moving = true;

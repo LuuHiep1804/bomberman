@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.tile;
 
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class GrassTile extends Tile{
@@ -8,7 +9,7 @@ public class GrassTile extends Tile{
     }
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return false;
     }
 }

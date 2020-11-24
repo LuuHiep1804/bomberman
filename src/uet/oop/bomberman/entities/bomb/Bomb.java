@@ -50,7 +50,7 @@ public class Bomb extends Entity {
     }
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return true;
     }
 

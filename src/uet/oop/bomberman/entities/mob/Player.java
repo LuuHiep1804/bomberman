@@ -2,7 +2,10 @@ package uet.oop.bomberman.entities.mob;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.tile.GrassTile;
 import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.graphics.Screen;
@@ -10,24 +13,22 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 
-<<<<<<< HEAD
-=======
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
->>>>>>> db29036b149f5510bc0fe9f42ac9bbc372719234
 public class Player extends Mob {
 
     private final int MAX_ANIM = 7500;
 
-    private double speed = 0.5;
+    private double speed = 1.0;
     private int dir = -1;
     private int anim;
     private int bombrange;
     private boolean moving = false;
-    private boolean check = true;
+    private boolean alive = true;
 
     protected int timeBetweenPutBombs = 0;
 
@@ -53,40 +54,31 @@ public class Player extends Mob {
 
     @Override
     public void move() {
-        double getItemY = board.entities[board.getItemAt()].getY();
-        double getItemX = board.entities[board.getItemAt()].getX();
         int xa = 0, ya = 0;
-        if (input.up) {
-            ya--;
-            dir = 0;
-        }
-        if (input.down) {
-            ya++;
-            dir = 2;
-        }
-        if (input.right) {
-            xa++;
-            dir = 1;
-        }
-        if (input.left) {
-            xa--;
-            dir = 3;
-        }
-        if (!tileCollision(xa, ya) && (xa != 0 || ya != 0)) {
-            x += xa * speed;
-            y += ya * speed;
-            moving = true;
-        } else {
-            moving = false;
-        }
-        if (((getItemX * 16 <= x && getItemX * 16 + 6 >= x) && (getItemY * 16 == y - 2))
-                || ((getItemX * 16 <= x && getItemX * 16 + 6 >= x) && (getItemY * 16 == y - 30))
-                || ((getItemX * 16 == x + 10) && (getItemY * 16 >= y - 18 && getItemY * 16 <= y - 12))
-                || ((getItemX * 16 == x - 17) && (getItemY * 16 >= y - 18 && getItemY * 16 <= y - 12))
-                && check == true) {
-            board.addEntity(board.getItemAt(), new GrassTile((int) getItemX, (int) getItemY, Sprite.grass));
-            speed = 1;
-            check = false;
+        if (alive) {
+            if (input.up) {
+                ya--;
+                dir = 0;
+            }
+            if (input.down) {
+                ya++;
+                dir = 2;
+            }
+            if (input.right) {
+                xa++;
+                dir = 1;
+            }
+            if (input.left) {
+                xa--;
+                dir = 3;
+            }
+            if (!tileCollision(xa, ya) && (xa != 0 || ya != 0)) {
+                x += xa * speed;
+                y += ya * speed;
+                moving = true;
+            } else {
+                moving = false;
+            }
         }
     }
 
@@ -145,6 +137,22 @@ public class Player extends Mob {
 
     }
 
+    @Override
+    public void kill() {
+        if (!alive) {
+            return;
+        }
+        alive = false;
+    }
+
+    @Override
+    public boolean checkCollision(Entity e) {
+        if (e instanceof FlameSegment) {
+            kill();
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void update() {
@@ -158,7 +166,11 @@ public class Player extends Mob {
 
     @Override
     public void render(Screen screen) {
-        chooseSprite();
+        if (alive) {
+            chooseSprite();
+        }else {
+            sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, anim, 60);
+        }
         screen.renderEntity((int) x, (int) y - sprite.getSize(), this);
     }
 }

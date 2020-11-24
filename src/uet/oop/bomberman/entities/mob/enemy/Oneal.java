@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -15,6 +16,11 @@ public class Oneal extends Enemy{
     @Override
     public void move() {
         super.move();
+    }
+
+    @Override
+    public void kill() {
+
     }
 
     @Override
@@ -46,7 +52,7 @@ public class Oneal extends Enemy{
     }
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return true;
     }
 }

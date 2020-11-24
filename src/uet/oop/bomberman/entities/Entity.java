@@ -30,7 +30,7 @@ public abstract class Entity implements IRender {
         return sprite;
     }
 
-    public abstract boolean checkCollision();
+    public abstract boolean checkCollision(Entity e);
 
     @Override
     public abstract void update();

@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
@@ -8,7 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Minvo extends Enemy {
 
     private final int Max_Check = 32;
-    private double Min_Check = 16;
+    private double Min_Check = 14;
     Player player = (Player) board.getPlayer();
     private double min;
     private int check = Max_Check;
@@ -57,6 +58,11 @@ public class Minvo extends Enemy {
     }
 
     @Override
+    public void kill() {
+
+    }
+
+    @Override
     public void update() {
         super.update();
     }
@@ -68,7 +74,7 @@ public class Minvo extends Enemy {
     }
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return true;
     }
 

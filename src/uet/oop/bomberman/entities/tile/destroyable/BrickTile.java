@@ -21,7 +21,7 @@ public class BrickTile extends Destroyable{
         int y = Coordinates.tileToPixel(this.y);
 
         if (destroyed) {
-            sprite = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2, 0, 0);
+            sprite = Sprite.brick_exploded2;
             screen.renderEntityWithBeLowSprite(x, y, this, beLowSprite);
         }else {
             screen.renderEntity(x, y, this);

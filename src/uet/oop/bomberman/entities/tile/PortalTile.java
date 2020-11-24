@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.tile;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class PortalTile extends Tile{
@@ -12,7 +13,7 @@ public class PortalTile extends Tile{
 
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return true;
     }
 }

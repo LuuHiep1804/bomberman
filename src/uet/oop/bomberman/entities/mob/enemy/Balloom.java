@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.mob.enemy;
 
 import com.sun.xml.internal.ws.policy.sourcemodel.PolicyModelGenerator;
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -34,6 +35,11 @@ public class Balloom extends Enemy{
     }
 
     @Override
+    public void kill() {
+
+    }
+
+    @Override
     public void update() {
         super.update();
     }
@@ -62,7 +68,7 @@ public class Balloom extends Enemy{
     }
 
     @Override
-    public boolean checkCollision() {
+    public boolean checkCollision(Entity e) {
         return true;
     }
 }

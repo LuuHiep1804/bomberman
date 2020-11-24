@@ -14,6 +14,11 @@ public abstract class Tile extends Entity {
     }
 
     @Override
+    public boolean checkCollision(Entity e) {
+        return true;
+    }
+
+    @Override
     public void update() {
 
     }

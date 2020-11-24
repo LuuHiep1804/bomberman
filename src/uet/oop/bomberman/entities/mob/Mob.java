@@ -21,17 +21,14 @@ public abstract class Mob extends Entity {
             double idX = ((this.x + xa) + i % 2 * 9) / 16;
             double idY = ((this.y + ya) + i / 2 * 10 - 13) / 16;
             Entity t = board.getTile(idX, idY);
-           if (t.checkCollision()) {
+           if (t.checkCollision(this)) {
                return true;
            }
         }
         return false;
     }
 
-    @Override
-    public boolean checkCollision() {
-        return true;
-    }
+    public abstract void kill();
 
     @Override
     public abstract void update();

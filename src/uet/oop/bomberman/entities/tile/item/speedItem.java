@@ -1,10 +1,12 @@
-package uet.oop.bomberman.entities.tile;
+package uet.oop.bomberman.entities.tile.item;
 
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Items extends Tile{
-    public Items(int x, int y, Sprite sprite) {
+public class speedItem extends Item{
+    public speedItem(int x, int y, Sprite sprite) {
         super(x, y, sprite);
     }
 

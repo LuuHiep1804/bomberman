@@ -41,8 +41,6 @@ public class Screen {
     }
 
     public void renderEntity(int xa, int ya, Entity entity) {
-//        xa -= xOffset;
-//        ya -= yOffset;
         for (int y = 0; y < entity.getSprite().getSize(); y++) {
             int yb = y + ya;
             for (int x = 0; x < entity.getSprite().getSize(); x++) {
@@ -62,8 +60,6 @@ public class Screen {
     }
 
     public void renderEntityWithBeLowSprite(int xa, int ya, Entity entity, Sprite below) {
-//        xa -= xOffset;
-//        ya -= yOffset;
         for (int y = 0; y < entity.getSprite().getSize(); y++) {
             int yb = y + ya;
             for (int x = 0; x < entity.getSprite().getSize(); x++) {
@@ -83,18 +79,4 @@ public class Screen {
             }
         }
     }
-
-//    public static void setOffset(int x, int y) {
-//        xOffset = x;
-//        yOffset = y;
-//    }
-
-//    public void drawChangeLevel(Graphics g, int level) {
-//        g.setColor(Color.black);
-//        g.fillRect(0, 0, getRealWidth(), getRealHeight());
-//
-//        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
-//        g.setFont(font);
-//        g.setColor(Color.white);
-//    }
 }

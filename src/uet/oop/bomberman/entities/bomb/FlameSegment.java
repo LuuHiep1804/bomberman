@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.entities.tile.destroyable.BrickTile;
 import uet.oop.bomberman.graphics.Screen;
 
@@ -18,11 +19,11 @@ public class FlameSegment extends Entity {
         this.board = board;
         this.radius = radius;
         this.dir = dir;
-        flames = new Flame[caculateRadius()];
         addExplosions();
     }
 
     public void addExplosions() {
+        flames = new Flame[flameLength()];
         boolean last = false;
         int xa = (int)x;
         int ya = (int)y;
@@ -48,7 +49,7 @@ public class FlameSegment extends Entity {
         }
     }
 
-    public int caculateRadius() {
+    public int flameLength() {
         int radius = 0;
         int x = (int) this.x;
         int y = (int) this.y;
@@ -58,7 +59,8 @@ public class FlameSegment extends Entity {
             if (dir == 2) y++;
             if (dir == 3) x--;
             Entity e = board.getTile(x, y);
-            if (e.checkCollision()) {
+            Entity m = board.getMob(x, y, null);
+            if (e.checkCollision(this) || m != null && m.checkCollision(this)) {
                 break;
             }
             radius++;
@@ -67,8 +69,8 @@ public class FlameSegment extends Entity {
     }
 
     @Override
-    public boolean checkCollision() {
-        return true;
+    public boolean checkCollision(Entity e) {
+        return false;
     }
 
     @Override

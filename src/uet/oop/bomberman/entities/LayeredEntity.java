@@ -24,8 +24,8 @@ public class LayeredEntity extends Entity{
     }
 
     @Override
-    public boolean checkCollision() {
-        return true;
+    public boolean checkCollision(Entity e) {
+        return getTopEntity().checkCollision(e);
     }
 
     @Override
@@ -50,9 +50,5 @@ public class LayeredEntity extends Entity{
         if(top.isRemoved())  {
             _entities.removeLast();
         }
-    }
-
-    public void addBeforeTop(Entity e) {
-        _entities.add(_entities.size() - 1, e);
     }
 }

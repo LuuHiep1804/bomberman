@@ -12,6 +12,9 @@ import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.entities.tile.PortalTile;
 import uet.oop.bomberman.entities.tile.WallTile;
 import uet.oop.bomberman.entities.tile.destroyable.BrickTile;
+import uet.oop.bomberman.entities.tile.item.bombItem;
+import uet.oop.bomberman.entities.tile.item.flameItem;
+import uet.oop.bomberman.entities.tile.item.speedItem;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -99,6 +102,33 @@ public class FileLevelLoader extends LevelLoader {
                     case '3':
                         board.addMob(new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        break;
+                    case 'X':
+                        board.addEntity(pos, new LayeredEntity(x, y,
+                                new GrassTile(x, y, Sprite.grass),
+                                new PortalTile(x, y, board, Sprite.portal),
+                                new BrickTile(x, y, Sprite.brick)));
+                        break;
+                    case 'b':
+                        LayeredEntity layer = new LayeredEntity(x, y,
+                                new GrassTile(x, y, Sprite.grass),
+                                new bombItem(x, y, Sprite.powerup_bombs),
+                                new BrickTile(x, y, Sprite.brick));
+                        board.addEntity(pos, layer);
+                        break;
+                    case 'S':
+                        layer = new LayeredEntity(x, y,
+                                new GrassTile(x, y, Sprite.grass),
+                                new speedItem(x, y, Sprite.powerup_speed),
+                                new BrickTile(x, y, Sprite.brick));
+                        board.addEntity(pos, layer);
+                        break;
+                    case 'f':
+                        layer = new LayeredEntity(x, y,
+                                new GrassTile(x, y, Sprite.grass),
+                                new flameItem(x, y, Sprite.powerup_flames),
+                                new BrickTile(x, y, Sprite.brick));
+                        board.addEntity(pos, layer);
                         break;
                     default:
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));

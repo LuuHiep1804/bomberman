@@ -79,6 +79,7 @@ public class Board implements IRender{
 
     @Override
     public void update() {
+        updateEntities();
         updateMob();
         updateBomb();
         updateFlame();
@@ -113,15 +114,22 @@ public class Board implements IRender{
         }
     }
 
+    //--------------------------Entity---------------------------------------------------------------------------
     public void addEntity(int pos, Entity e) {
         entities[pos] = e;
+    }
+
+    public void updateEntities() {
+        for (int i = 0; i < entities.length; i++) {
+            entities[i].update();
+        }
     }
 
     public Entity getTile(double x, double y) {
         return entities[(int) x + (int) y * levelLoader.getWidth()];
     }
 
-    //---------------------------Mob-------------------------------
+    //---------------------------Mob-----------------------------------------------------------------------------
     public void addMob(Mob e) {
         listMob.add(e);
     }
@@ -141,7 +149,20 @@ public class Board implements IRender{
         }
     }
 
-    //-----------------------------BOMB--------------------------------
+    public Entity getMob(int x, int y, Mob a) {
+        Iterator<Mob> itr = listMob.iterator();
+        Mob m;
+        while (itr.hasNext()) {
+            m = itr.next();
+            if (m == a) continue;
+            if (m.getTileX() == x && m.getTileY() == y) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    //-----------------------------BOMB--------------------------------------------------------------------------
     public void addBomb(Bomb b) {
         listBomb.add(b);
     }
