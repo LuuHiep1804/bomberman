@@ -17,15 +17,42 @@ public class Game extends Canvas {
     public static int SCALE = 3;
     public static final String TITLE = "Bomberman";
 
-//    protected static int SCREENDELAY = 3;
-//    protected int screenDelay = SCREENDELAY;
-
     private Keyboard input;
     private boolean running = false;
-    //    private boolean paused = true;
     private Board board;
     private Screen screen;
     private Frame frame;
+    private static int bombRange = 1;
+    private static double speed = 1.0;
+    private static int bombRate = 1;
+
+    public static int getBombRange() {
+        return bombRange;
+    }
+
+    public static void addBombRange() {
+        bombRange = 2;
+    }
+
+    public static int getBombRate() {
+        return bombRate;
+    }
+
+    public static void addBombRate() {
+        bombRate = bombRate + 1;
+    }
+
+    public static void removeBombRate() {
+        bombRate = bombRate - 1;
+    }
+
+    public static double getSpeed() {
+        return speed;
+    }
+
+    public static void addSpeed() {
+        speed = speed + 0.15;
+    }
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -85,4 +112,5 @@ public class Game extends Canvas {
             renderGame();
         }
     }
+
 }

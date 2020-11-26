@@ -11,6 +11,7 @@ import java.util.Random;
 public class Balloom extends Enemy{
 
     private Random ran = new Random();
+    private int timeDelay = 50;
 
     public Balloom(int x, int y, Board board) {
         super(x, y, board);
@@ -21,33 +22,44 @@ public class Balloom extends Enemy{
 
     @Override
     public void move() {
-        if (!tileCollision(speed, 0) && dir == 0) {
-            x += speed;
-        } else if (!tileCollision(-speed, 0)  && dir == 1) {
-            x -= speed;
-        } else if (!tileCollision(0, speed) && dir == 2) {
-            y += speed;
-        } else if (!tileCollision(0, -speed) && dir == 3 ) {
-            y -= speed;
-        } else {
-            dir = ran.nextInt(4);
+        if (alive) {
+            if (!tileCollision(6, 0) && dir == 0) {
+                x += speed;
+            } else if (!tileCollision(-speed, 0) && dir == 1) {
+                x -= speed;
+            } else if (!tileCollision(0, 3) && dir == 2) {
+                y += speed;
+            } else if (!tileCollision(0, -4) && dir == 3) {
+                y -= speed;
+            } else {
+                dir = ran.nextInt(4);
+            }
         }
     }
 
     @Override
-    public void kill() {
-
-    }
-
-    @Override
     public void update() {
+        if (!alive) {
+            if (timeDelay > 0) {
+                timeDelay--;
+            }else {
+                remove();
+            }
+        }
         super.update();
     }
 
     @Override
     public void render(Screen screen) {
-        chooseSprite();
-        super.render(screen);
+        if (alive) {
+            chooseSprite();
+            super.render(screen);
+        }else {
+            sprite = Sprite.balloom_dead;
+            sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, anim, 60);
+            super.render(screen);
+        }
+
     }
 
     public void chooseSprite() {
@@ -65,10 +77,5 @@ public class Balloom extends Enemy{
                 sprite = Sprite.movingSprite(Sprite.balloom_right2, Sprite.balloom_right3, anim, 20);
                 break;
         }
-    }
-
-    @Override
-    public boolean checkCollision(Entity e) {
-        return true;
     }
 }

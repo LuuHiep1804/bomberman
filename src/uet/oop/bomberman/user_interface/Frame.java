@@ -1,4 +1,4 @@
-package uet.oop.bomberman.gui;
+package uet.oop.bomberman.user_interface;
 
 import uet.oop.bomberman.Game;
 

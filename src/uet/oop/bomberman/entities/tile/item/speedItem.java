@@ -12,6 +12,10 @@ public class speedItem extends Item{
 
     @Override
     public boolean checkCollision(Entity e) {
+        if (e instanceof Player) {
+            Game.addSpeed();
+            remove();
+        }
         return false;
     }
 }

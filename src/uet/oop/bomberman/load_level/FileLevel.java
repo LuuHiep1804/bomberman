@@ -1,4 +1,4 @@
-package uet.oop.bomberman.level;
+package uet.oop.bomberman.load_level;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
@@ -8,7 +8,6 @@ import uet.oop.bomberman.entities.mob.enemy.Balloom;
 import uet.oop.bomberman.entities.mob.enemy.Minvo;
 import uet.oop.bomberman.entities.mob.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.GrassTile;
-import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.entities.tile.PortalTile;
 import uet.oop.bomberman.entities.tile.WallTile;
 import uet.oop.bomberman.entities.tile.destroyable.BrickTile;
@@ -23,11 +22,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileLevelLoader extends LevelLoader {
+public class FileLevel extends Level {
 
     private static char[][] map;
 
-    public FileLevelLoader(int level, Board board) throws LoadLevelExceptions {
+    public FileLevel(int level, Board board) throws LoadLevelExceptions {
         super(level, board);
     }
 
@@ -73,10 +72,6 @@ public class FileLevelLoader extends LevelLoader {
                     case 'x':
                         board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new PortalTile(x, y, board, Sprite.portal), new WallTile(x, y, Sprite.wall)));
                         break;
-                    case 's':
-                        board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new Items(x, y, Sprite.powerup_speed)));
-                        board.setItemAt(pos);
-                        break;
                     case '*':
                         board.addEntity(x + y * width,
                                 new LayeredEntity(x, y,
@@ -86,21 +81,21 @@ public class FileLevelLoader extends LevelLoader {
                         );
                         break;
                     case 'p':
-                        Player player = new Player(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board);
+                        Player player = new Player(x * 16, y * 16 + Game.TILE_SIZE, board);
                         board.addMob(player);
                         board.setPlayer(player);
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '1':
-                        board.addMob(new Balloom(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
+                        board.addMob(new Balloom(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '2':
-                        board.addMob(new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
+                        board.addMob(new Oneal(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '3':
-                        board.addMob(new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILE_SIZE, board));
+                        board.addMob(new Minvo(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
                         break;
                     case 'X':

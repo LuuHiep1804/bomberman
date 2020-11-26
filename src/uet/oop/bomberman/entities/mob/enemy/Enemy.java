@@ -1,6 +1,8 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.mob.Mob;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
@@ -15,6 +17,7 @@ public abstract class Enemy extends Mob {
     protected int dir = -1;
     protected int anim;
     protected boolean moving;
+    protected boolean alive = true;
 
 
     public Enemy(int x, int y, Board board) {
@@ -39,20 +42,38 @@ public abstract class Enemy extends Mob {
     }
 
     @Override
-    public void move() {
-        if (!tileCollision(1, 0) && moving == true) {
-            x += 1 * speed;
-            y += 0 * speed;
-            dir = 0;
-        } else {
-            moving = false;
+    public void kill() {
+        if (!alive) {
+            return;
+        }else {
+            alive = false;
         }
-        if (!tileCollision(-1, 0) && moving == false) {
-            x += -1 * speed;
-            y += 0 * speed;
-            dir = 1;
-        } else {
-            moving = true;
+    }
+
+    @Override
+    public boolean checkCollision(Entity e) {
+        if (e instanceof FlameSegment) {
+            kill();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void move() {
+        if (alive) {
+            if (!tileCollision(6, 0) && moving == true) {
+                x += speed;
+                dir = 0;
+            } else {
+                moving = false;
+            }
+            if (!tileCollision(-speed, 0) && moving == false) {
+                x -= speed;
+                dir = 1;
+            } else {
+                moving = true;
+            }
         }
     }
 

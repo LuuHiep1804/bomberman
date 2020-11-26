@@ -5,14 +5,12 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.mob.Mob;
-import uet.oop.bomberman.entities.tile.Items;
-import uet.oop.bomberman.entities.tile.Tile;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
-import uet.oop.bomberman.level.FileLevelLoader;
-import uet.oop.bomberman.level.LevelLoader;
+import uet.oop.bomberman.load_level.FileLevel;
+import uet.oop.bomberman.load_level.Level;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +18,7 @@ import java.util.List;
 
 public class Board implements IRender{
 
-    protected LevelLoader levelLoader;
+    protected Level levelLoader;
     protected Game game;
     protected Keyboard input;
     protected Screen screen;
@@ -32,8 +30,6 @@ public class Board implements IRender{
     public List<Bomb> listBomb = new ArrayList<>();
     public List<Flame> listFlame = new ArrayList<>();
 
-    private int screenShow = -1;
-
     public Board(Game game, Keyboard input, Screen screen) {
         this.game = game;
         this.input = input;
@@ -41,20 +37,12 @@ public class Board implements IRender{
         loadLevel(1);
     }
 
-    public LevelLoader getLevel() {
+    public Level getLevel() {
         return levelLoader;
     }
 
     public Game getGame() {
         return game;
-    }
-
-    public int getShow() {
-        return screenShow;
-    }
-
-    public void setShow(int i) {
-        screenShow = i;
     }
 
     public Keyboard getInput() {
@@ -83,6 +71,7 @@ public class Board implements IRender{
         updateMob();
         updateBomb();
         updateFlame();
+        removeMob();
     }
 
     @Override
@@ -104,9 +93,8 @@ public class Board implements IRender{
 
 
     public void loadLevel(int level){
-        screenShow = 2;
         try{
-            levelLoader = new FileLevelLoader(level, this);
+            levelLoader = new FileLevel(level, this);
             entities = new Entity[levelLoader.getWidth() * levelLoader.getHeight()];
             levelLoader.creataEntities();
         }catch (LoadLevelExceptions e) {
@@ -162,6 +150,14 @@ public class Board implements IRender{
         return null;
     }
 
+    public void removeMob() {
+        for (int i = 0; i < listMob.size(); i++) {
+            if (listMob.get(i).isRemoved()) {
+                listMob.remove(i);
+            }
+        }
+    }
+
     //-----------------------------BOMB--------------------------------------------------------------------------
     public void addBomb(Bomb b) {
         listBomb.add(b);
@@ -184,6 +180,19 @@ public class Board implements IRender{
             itr.next().update();
         }
     }
+
+    public Bomb getBomb(double x, double y) {
+        Iterator<Bomb> itr = listBomb.iterator();
+        Bomb b;
+        while (itr.hasNext()) {
+            b = itr.next();
+            if (b.getX() == (int) x && b.getY() == (int) y) {
+                return b;
+            }
+        }
+        return null;
+    }
+
     //-----------------------------Flame--------------------------------
     public void addFlame(Flame flame) {
         listFlame.add(flame);

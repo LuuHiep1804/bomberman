@@ -6,6 +6,9 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemy{
+
+    private int timeDelay =  50;
+
     public Oneal(int x, int y, Board board) {
         super(x, y, board);
         speed = 0.15;
@@ -19,19 +22,27 @@ public class Oneal extends Enemy{
     }
 
     @Override
-    public void kill() {
-
-    }
-
-    @Override
     public void update() {
+        if (!alive) {
+            if (timeDelay > 0) {
+                timeDelay--;
+            }else {
+                remove();
+            }
+        }
         super.update();
     }
 
     @Override
     public void render(Screen screen) {
-        chooseSprite();
-        super.render(screen);
+        if (alive) {
+            chooseSprite();
+            super.render(screen);
+        }else {
+            sprite = Sprite.oneal_dead;
+            sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, anim, 60);
+            super.render(screen);
+        }
     }
 
     public void chooseSprite() {
@@ -49,10 +60,5 @@ public class Oneal extends Enemy{
                 sprite = Sprite.movingSprite(Sprite.oneal_right2, Sprite.oneal_right3, anim, 20);
                 break;
         }
-    }
-
-    @Override
-    public boolean checkCollision(Entity e) {
-        return true;
     }
 }

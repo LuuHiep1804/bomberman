@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -15,6 +17,7 @@ public class Bomb extends Entity {
     protected Board board;
     protected FlameSegment[] flames;
     protected boolean explode = false;
+    protected boolean allowedToMove = false;
 
     public Bomb(int x, int y, Board board, int range) {
         this.x = x;
@@ -22,7 +25,7 @@ public class Bomb extends Entity {
         this.board = board;
         this.range = range;
         bombCounter = 120;
-        timeFlame = 20;
+        timeFlame = 15;
         anim = 0;
         sprite = Sprite.bomb;
     }
@@ -37,6 +40,7 @@ public class Bomb extends Entity {
 
     public void flame() {
         explode = true;
+        allowedToMove = false;
         flames = new FlameSegment[4];
         for (int i = 0; i < flames.length; i++) {
             flames[i] = new FlameSegment((int)x, (int) y, board, i, range);
@@ -51,6 +55,15 @@ public class Bomb extends Entity {
 
     @Override
     public boolean checkCollision(Entity e) {
+        // đi ra sau khi đặt bomb
+        if (e instanceof Player) {
+            int xa = (int) e.getX() - (int) getX() * 16;
+            int ya = (int) e.getY() - (int) getY() * 16;
+            if (!(xa >= -10 && xa < 16 && ya >= 1 && ya <= 28)) {
+                allowedToMove = true;
+            }
+            return allowedToMove;
+        }
         return true;
     }
 

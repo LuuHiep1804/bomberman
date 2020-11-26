@@ -1,13 +1,13 @@
-package uet.oop.bomberman.level;
+package uet.oop.bomberman.load_level;
 
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.Board;
-public abstract class LevelLoader extends LoadLevelExceptions {
+public abstract class Level extends LoadLevelExceptions {
     protected int width = 20, height = 20;
     protected int level;
     protected Board board;
 
-    public LevelLoader(int level, Board board) throws LoadLevelExceptions{
+    public Level(int level, Board board) throws LoadLevelExceptions{
         this.board = board;
         loadLevel(level);
     }

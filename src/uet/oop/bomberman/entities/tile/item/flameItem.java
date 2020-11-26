@@ -1,6 +1,8 @@
 package uet.oop.bomberman.entities.tile.item;
 
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class flameItem extends Item{
@@ -9,6 +11,10 @@ public class flameItem extends Item{
     }
     @Override
     public boolean checkCollision(Entity e) {
+        if (e instanceof Player) {
+            Game.addBombRange();
+            remove();
+        }
         return false;
     }
 }

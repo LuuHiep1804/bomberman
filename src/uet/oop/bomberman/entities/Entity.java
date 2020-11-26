@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
 
 public abstract class Entity implements IRender {
     protected double x, y;
@@ -19,11 +18,11 @@ public abstract class Entity implements IRender {
     }
 
     public double getTileX() {
-        return Coordinates.pixelToTile(x + sprite.getSize() / 2);
+        return (int)((x + sprite.getSize() / 2) / 16);
     }
 
     public double getTileY() {
-        return Coordinates.pixelToTile(y - sprite.getSize() / 2);
+        return (int)((y - sprite.getSize() / 2)/16);
     }
 
     public Sprite getSprite() {

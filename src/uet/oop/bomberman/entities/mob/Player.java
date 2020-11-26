@@ -3,19 +3,13 @@ package uet.oop.bomberman.entities.mob;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
-import uet.oop.bomberman.entities.tile.GrassTile;
-import uet.oop.bomberman.entities.tile.Items;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
-import uet.oop.bomberman.level.Coordinates;
 
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,14 +17,16 @@ public class Player extends Mob {
 
     private final int MAX_ANIM = 7500;
 
-    private double speed = 1.0;
+    private double speed;
     private int dir = -1;
     private int anim;
-    private int bombrange;
+    private int bombRange;
     private boolean moving = false;
     private boolean alive = true;
 
     protected int timeBetweenPutBombs = 0;
+    protected int timeDelay = 50;
+    protected int bombRate;
 
     public Keyboard input;
     public List<Bomb> bombs;
@@ -40,8 +36,10 @@ public class Player extends Mob {
         sprite = Sprite.player_right;
         this.input = board.getInput();
         anim = 0;
-        bombrange = 2;
+        bombRange = Game.getBombRange();
         bombs = board.getBombs();
+        speed = Game.getSpeed();
+        bombRate = Game.getBombRate();
     }
 
     public void animate() {
@@ -51,6 +49,7 @@ public class Player extends Mob {
             anim = 0;
         }
     }
+
 
     @Override
     public void move() {
@@ -115,12 +114,13 @@ public class Player extends Mob {
 
     //------------Bomb-----------------------------------------------------------------------------
     public void placeBomb() {
-        if(input.space && timeBetweenPutBombs < 0) {
-            int xt = Coordinates.pixelToTile(x + sprite.getSize() / 2);
-            int yt = Coordinates.pixelToTile((y + sprite.getSize() / 2) - sprite.getSize());
-            Bomb bomb = new Bomb(xt, yt, board, bombrange);
+        if(input.space && timeBetweenPutBombs < 0 && Game.getBombRate() > 0) {
+            int xt = (int) (x + sprite.getSize() / 2) / 16;
+            int yt = (int) ((y + sprite.getSize() / 2) - sprite.getSize()) / 16;
+            Bomb bomb = new Bomb(xt, yt, board, bombRange);
             board.addBomb(bomb);
             timeBetweenPutBombs = 30;
+            Game.removeBombRate();
         }
     }
 
@@ -132,6 +132,7 @@ public class Player extends Mob {
             b = bs.next();
             if(b.isRemoved())  {
                 bs.remove();
+                Game.addBombRate();
             }
         }
 
@@ -157,11 +158,21 @@ public class Player extends Mob {
     @Override
     public void update() {
         clearBombs();
+        if (!alive) {
+            if (timeDelay > 0) {
+                timeDelay--;
+            }else {
+                remove();
+            }
+        }
         if(timeBetweenPutBombs < -7500) timeBetweenPutBombs = 0;
         else timeBetweenPutBombs--;
         animate();
         move();
         placeBomb();
+        speed = Game.getSpeed();
+        bombRate = Game.getBombRate();
+        bombRange = Game.getBombRange();
     }
 
     @Override

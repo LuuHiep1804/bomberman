@@ -13,6 +13,7 @@ public class Minvo extends Enemy {
     Player player = (Player) board.getPlayer();
     private double min;
     private int check = Max_Check;
+    private int timeDeLay = 50;
 
     public Minvo(int x, int y, Board board) {
         super(x, y, board);
@@ -22,60 +23,65 @@ public class Minvo extends Enemy {
 
     @Override
     public void move() {
-        min = _x(x) + _y(y);
-        if (!tileCollision(Min_Check, 0) && min > _x(x + 16) + _y(y) && check == Max_Check) {
-            min = _x(x + 16) + _y(y);
-            dir = 1;
+        if (alive) {
+            min = _x(x) + _y(y);
+            if (!tileCollision(Min_Check, 0) && min > _x(x + 16) + _y(y) && check == Max_Check) {
+                min = _x(x + 16) + _y(y);
+                dir = 1;
+            }
+            if (!tileCollision(-Min_Check, 0) && min > _x(x - 16) + _y(y) && check == Max_Check) {
+                min = _x(x - 16) + _y(y);
+                dir = 0;
+            }
+            if (!tileCollision(0, Min_Check) && min > _x(x) + _y(y + 16) && check == Max_Check) {
+                min = _x(x) + _y(y + 16);
+                dir = 2;
+            }
+            if (!tileCollision(0, -Min_Check) && min > _x(x) + _y(y - 16) && check == Max_Check) {
+                min = _x(x) + _y(y - 16);
+                dir = 3;
+            }
+            if (check == Max_Check) {
+                check = 0;
+            }
+            if (dir == 0) {
+                x -= speed;
+                check++;
+            } else if (dir == 1) {
+                x += speed;
+                check++;
+            } else if (dir == 2) {
+                y += speed;
+                check++;
+            } else if (dir == 3) {
+                y -= speed;
+                check++;
+            }
         }
-        if (!tileCollision(-Min_Check, 0) && min > _x(x - 16) + _y(y) && check == Max_Check) {
-            min = _x(x - 16) + _y(y);
-            dir = 0;
-        }
-        if (!tileCollision(0, Min_Check) && min > _x(x) + _y(y + 16) && check == Max_Check) {
-            min = _x(x) + _y(y + 16);
-            dir = 2;
-        }
-        if (!tileCollision(0, -Min_Check) && min > _x(x) + _y(y - 16) && check == Max_Check) {
-            min = _x(x) + _y(y - 16);
-            dir = 3;
-        }
-        if (check == Max_Check) {
-            check = 0;
-        }
-        if (dir == 0) {
-            x -= speed;
-            check++;
-        } else if (dir == 1) {
-            x += speed;
-            check++;
-        } else if (dir == 2) {
-            y += speed;
-            check++;
-        } else if (dir == 3){
-            y -= speed;
-            check++;
-        }
-    }
-
-    @Override
-    public void kill() {
-
     }
 
     @Override
     public void update() {
+        if (!alive) {
+            if (timeDeLay > 0) {
+                timeDeLay--;
+            }else {
+                remove();
+            }
+        }
         super.update();
     }
 
     @Override
     public void render(Screen screen) {
-        chooseSprite();
-        super.render(screen);
-    }
-
-    @Override
-    public boolean checkCollision(Entity e) {
-        return true;
+        if (alive) {
+            chooseSprite();
+            super.render(screen);
+        } else {
+            sprite = Sprite.minvo_dead;
+            sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, anim, 60);
+            super.render(screen);
+        }
     }
 
     public void chooseSprite() {

@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.tile.destroyable;
 
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
 
 public class BrickTile extends Destroyable{
 
@@ -17,8 +16,8 @@ public class BrickTile extends Destroyable{
 
     @Override
     public void render(Screen screen) {
-        int x = Coordinates.tileToPixel(this.x);
-        int y = Coordinates.tileToPixel(this.y);
+        int x = (int)(this.x * 16);
+        int y = (int)(this.y * 16);
 
         if (destroyed) {
             sprite = Sprite.brick_exploded2;
