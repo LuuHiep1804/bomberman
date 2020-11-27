@@ -134,7 +134,9 @@ public class Player extends Mob {
                 bs.remove();
                 Game.addBombRate();
             }
+
         }
+
 
     }
 

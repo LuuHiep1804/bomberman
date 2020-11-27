@@ -39,12 +39,17 @@ public class Game extends Canvas {
     }
 
     public static void addBombRate() {
-        bombRate = bombRate + 1;
+        bombRate++ ;
     }
 
     public static void removeBombRate() {
-        bombRate = bombRate - 1;
+        if (bombRate > 2) {
+            bombRate = bombRate - 2;
+        } else {
+            bombRate--;
+        }
     }
+
 
     public static double getSpeed() {
         return speed;

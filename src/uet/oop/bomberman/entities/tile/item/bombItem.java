@@ -13,6 +13,7 @@ public class bombItem extends Item{
     public boolean checkCollision(Entity e) {
         if (e instanceof Player) {
             Game.addBombRate();
+            //System.out.println(Game.getBombRate());
             remove();
         }
         return false;

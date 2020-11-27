@@ -64,6 +64,7 @@ public class Bomb extends Entity {
             }
             return allowedToMove;
         }
+
         return true;
     }
 
