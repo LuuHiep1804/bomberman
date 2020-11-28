@@ -19,10 +19,10 @@ public class Game extends Canvas {
 
     private Keyboard input;
     private boolean running = false;
-    private Board board;
+    private DashBoard board;
     private Screen screen;
     private Frame frame;
-    private static int bombRange = 1;
+    private static int bombRange = 2;
     private static double speed = 1.0;
     private static int bombRate = 1;
 
@@ -67,7 +67,7 @@ public class Game extends Canvas {
         frame.setTitle(TITLE);
         screen = new Screen(WIDTH, HEIGHT);
         input = new Keyboard();
-        board = new Board(this, input, screen);
+        board = new DashBoard(this, input, screen);
         addKeyListener(input);
     }
 

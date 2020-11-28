@@ -1,9 +1,9 @@
 package uet.oop.bomberman.entities.bomb;
 
-import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.mob.Player;
+import uet.oop.bomberman.game_sound.GameSound;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -14,18 +14,18 @@ public class Bomb extends Entity {
     private int bombCounter;
     private int timeFlame;
     private final int MAX_ANIM = 7500;
-    protected Board board;
+    protected DashBoard board;
     protected FlameSegment[] flames;
     protected boolean explode = false;
     protected boolean allowedToMove = false;
 
-    public Bomb(int x, int y, Board board, int range) {
+    public Bomb(int x, int y, DashBoard board, int range) {
         this.x = x;
         this.y = y;
         this.board = board;
         this.range = range;
         bombCounter = 120;
-        timeFlame = 15;
+        timeFlame = 30;
         anim = 0;
         sprite = Sprite.bomb;
     }
@@ -45,6 +45,24 @@ public class Bomb extends Entity {
         for (int i = 0; i < flames.length; i++) {
             flames[i] = new FlameSegment((int)x, (int) y, board, i, range);
         }
+        GameSound.play("bomb_bang");
+    }
+
+    public Flame flameAt(int x, int y) {
+        if (!explode) {
+            return null;
+        }
+        for (int i = 0; i < flames.length; i++) {
+            if (flames[i] == null) {
+                return null;
+            }else {
+                Flame f = flames[i].flameSegmentAt(x, y);
+                if (f != null) {
+                    return f;
+                }
+            }
+        }
+        return null;
     }
 
     public void renderFlame(Screen screen) {
@@ -52,6 +70,7 @@ public class Bomb extends Entity {
             flames[i].render(screen);
         }
     }
+
 
     @Override
     public boolean checkCollision(Entity e) {

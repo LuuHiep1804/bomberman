@@ -1,17 +1,18 @@
 package uet.oop.bomberman.entities.bomb;
 
-import uet.oop.bomberman.Board;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.mob.Player;
+import uet.oop.bomberman.entities.mob.enemy.Enemy;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Flame extends Entity {
 
-    protected Board board;
+    protected DashBoard board;
     protected boolean last;
 
-    public Flame (int x, int y, Board board, int dir, boolean last){
+    public Flame (int x, int y, DashBoard board, int dir, boolean last){
         this.x = x;
         this.y = y;
         this.board = board;
@@ -50,6 +51,12 @@ public class Flame extends Entity {
 
     @Override
     public boolean checkCollision(Entity e) {
+        if (e instanceof Player) {
+            ((Player) e).kill();
+        }
+        if (e instanceof Enemy) {
+            ((Enemy) e).kill();
+        }
         return false;
     }
 
