@@ -34,7 +34,7 @@ public class FileLevel extends Level {
     public void loadLevel(int level) throws LoadLevelExceptions {
         List<String> list = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("res\\levels\\Level" + level + ".txt");
+            FileReader fr = new FileReader("C:\\\\Users\\\\Nguyen Duc Hoang\\\\IdeaProjects\\\\BomBerMan\\\\bomberman\\\\res\\\\levels\\\\Level1.txt");
             BufferedReader br = new BufferedReader(fr);
             String line = br.readLine();
             while (!line.equals("")) {

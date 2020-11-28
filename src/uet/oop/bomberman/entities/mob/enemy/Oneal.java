@@ -2,23 +2,48 @@ package uet.oop.bomberman.entities.mob.enemy;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemy{
 
     private int timeDelay =  50;
+    Player player = (Player) board.getPlayer();
 
     public Oneal(int x, int y, Board board) {
         super(x, y, board);
-        speed = 0.15;
+        speed = 0.5;
         moving = false;
         sprite = Sprite.oneal_left1;
     }
 
     @Override
     public void move() {
-        super.move();
+        if (!tileCollision(0, -speed) && x - 9 < player.getX() && x + 12 > player.getX() && y > player.getY()) {
+            moving = true;
+            dir = 3;
+        } else if (!tileCollision(0, speed) && x - 9 < player.getX() && x + 12 > player.getX() && y < player.getY()) {
+            moving = true;
+            dir = 2;
+        } else if (!tileCollision(speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x < player.getX()) {
+            moving = true;
+            dir = 1;
+        } else if (!tileCollision(-speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x > player.getX()) {
+            moving = true;
+            dir = 0;
+        } else {
+            moving = false;
+        }
+        if (dir == 0 && moving == true) {
+            x -= speed;
+        } else if (dir == 1 && moving == true) {
+            x += speed;
+        } else if (dir == 2 && moving == true) {
+            y += speed;
+        } else if (dir == 3 && moving == true) {
+            y -= speed;
+        }
     }
 
     @Override

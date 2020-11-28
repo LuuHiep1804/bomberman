@@ -8,8 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Minvo extends Enemy {
 
-    private final int Max_Check = 32;
-    private double Min_Check = 14;
+    private final int Max_Check = 16;
     Player player = (Player) board.getPlayer();
     private double min;
     private int check = Max_Check;
@@ -17,43 +16,41 @@ public class Minvo extends Enemy {
 
     public Minvo(int x, int y, Board board) {
         super(x, y, board);
-        speed = 0.5;
+        speed = 1;
         sprite = Sprite.minvo_left1;
     }
 
     @Override
     public void move() {
         if (alive) {
-            min = _x(x) + _y(y);
-            if (!tileCollision(Min_Check, 0) && min > _x(x + 16) + _y(y) && check == Max_Check) {
-                min = _x(x + 16) + _y(y);
+            min = getAt(x, y);
+            if (min > getAt(x + 8, y) && check == Max_Check) {
                 dir = 1;
-            }
-            if (!tileCollision(-Min_Check, 0) && min > _x(x - 16) + _y(y) && check == Max_Check) {
-                min = _x(x - 16) + _y(y);
+                min = getAt(x + 8, y);
+                check = 0;
+            } else if (min > getAt(x - 8, y) && check == Max_Check) {
                 dir = 0;
-            }
-            if (!tileCollision(0, Min_Check) && min > _x(x) + _y(y + 16) && check == Max_Check) {
-                min = _x(x) + _y(y + 16);
+                min = getAt(x - 8, y);
+                check = 0;
+            } else if (min > getAt(x, y + 8) && check == Max_Check) {
                 dir = 2;
-            }
-            if (!tileCollision(0, -Min_Check) && min > _x(x) + _y(y - 16) && check == Max_Check) {
-                min = _x(x) + _y(y - 16);
+                min = getAt(x, y + 8);
+                check = 0;
+            } else if (min > getAt(x, y - 8) && check == Max_Check) {
                 dir = 3;
-            }
-            if (check == Max_Check) {
+                min = getAt(x, y - 8);
                 check = 0;
             }
-            if (dir == 0) {
+            if (dir == 0 && check < Max_Check) {
                 x -= speed;
                 check++;
-            } else if (dir == 1) {
+            } else if (dir == 1 && check < Max_Check) {
                 x += speed;
                 check++;
-            } else if (dir == 2) {
+            } else if (dir == 2 && check < Max_Check) {
                 y += speed;
                 check++;
-            } else if (dir == 3) {
+            } else if (dir == 3 && check < Max_Check) {
                 y -= speed;
                 check++;
             }
@@ -101,11 +98,7 @@ public class Minvo extends Enemy {
         }
     }
 
-    public double _x(double x1) {
-        return (player.getX() - x1) * (player.getX() - x1);
-    }
-
-    public double _y(double y1) {
-        return (player.getY() - y1) * (player.getY() - y1);
+    public double getAt(double x1, double y1) {
+        return Math.abs(player.getX() - x1) + Math.abs(player.getY() - y1);
     }
 }
