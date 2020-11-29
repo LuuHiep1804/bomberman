@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.mob.Mob;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.game_sound.GameSound;
 import uet.oop.bomberman.graphics.Screen;
@@ -42,6 +43,10 @@ public class Bomb extends Entity {
         explode = true;
         allowedToMove = false;
         flames = new FlameSegment[4];
+        Mob m = board.getMob((int)x,(int) y, null);
+        if (m != null) {
+            m.kill();
+        }
         for (int i = 0; i < flames.length; i++) {
             flames[i] = new FlameSegment((int)x, (int) y, board, i, range);
         }

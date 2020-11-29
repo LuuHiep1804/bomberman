@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import uet.oop.bomberman.game_sound.GameSound;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 
@@ -25,6 +26,7 @@ public class Game extends Canvas {
     private static int bombRange = 2;
     private static double speed = 1.0;
     private static int bombRate = 1;
+    private int timeMusic = 2760;
 
     public static int getBombRange() {
         return bombRange;

@@ -7,7 +7,7 @@ import sun.applet.Main;
 
 public class GameSound {
     public static void play(String sound) {
-        if (!sound.equals("playgame")) {
+        if (!sound.equals("playgame") && !sound.equals("lose")) {
             new Thread(new Runnable() {
                 public void run() {
                     try {

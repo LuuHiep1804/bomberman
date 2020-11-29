@@ -33,26 +33,28 @@ public class Doll extends Enemy {
 
     @Override
     public void move() {
-        if (check == Max_Check) {
-            setGraph();
-            bfs();
-            check = 0;
-        }
-        if (checkPath[yDoll-1][xDoll] == 1 && check < Max_Check) {
-            y -= speed;
-            check++;
-        }
-        if (checkPath[yDoll+1][xDoll] == 1 && check < Max_Check) {
-            y += speed;
-            check++;
-        }
-        if (checkPath[yDoll][xDoll-1] == 1 && check < Max_Check) {
-            x -= speed;
-            check++;
-        }
-        if (checkPath[yDoll][xDoll+1] == 1 && check < Max_Check) {
-            x += speed;
-            check++;
+        if(alive) {
+            if (check == Max_Check) {
+                setGraph();
+                bfs();
+                check = 0;
+            }
+            if (checkPath[yDoll - 1][xDoll] == 1 && check < Max_Check && !tileCollision(0, -4)) {
+                y -= speed;
+                check++;
+            }
+            if (checkPath[yDoll + 1][xDoll] == 1 && check < Max_Check && !tileCollision(0, 3)) {
+                y += speed;
+                check++;
+            }
+            if (checkPath[yDoll][xDoll - 1] == 1 && check < Max_Check && !tileCollision(-speed, 0)) {
+                x -= speed;
+                check++;
+            }
+            if (checkPath[yDoll][xDoll + 1] == 1 && check < Max_Check && !tileCollision(6, 0)) {
+                x += speed;
+                check++;
+            }
         }
     }
 
