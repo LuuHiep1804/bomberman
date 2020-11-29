@@ -26,6 +26,7 @@ public class DashBoard implements IRender{
     protected int itemAt;
 
     public Entity[] entities;
+    public int[][] path = new int[13][29];
     public List<Mob> listMob = new ArrayList<>();
     public List<Bomb> listBomb = new ArrayList<>();
     public List<Flame> listFlame = new ArrayList<>();
@@ -100,6 +101,14 @@ public class DashBoard implements IRender{
         }catch (LoadLevelExceptions e) {
             ;
         }
+    }
+
+    public void addPath(int x, int y, int z) {
+        path[x][y] = z;
+    }
+
+    public int[][] getPath() {
+        return path;
     }
 
     //--------------------------Entity---------------------------------------------------------------------------

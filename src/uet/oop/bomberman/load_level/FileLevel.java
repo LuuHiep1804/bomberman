@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.entities.mob.enemy.Balloom;
+import uet.oop.bomberman.entities.mob.enemy.Doll;
 import uet.oop.bomberman.entities.mob.enemy.Kondoria;
 import uet.oop.bomberman.entities.mob.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.GrassTile;
@@ -65,12 +66,15 @@ public class FileLevel extends Level {
                 switch (c) {
                     case ' ':
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                     case '#':
                         board.addEntity(pos, new WallTile(x, y, Sprite.wall));
+                        board.addPath(y, x, 0);
                         break;
                     case 'x':
                         board.addEntity(pos, new LayeredEntity(x, y, new GrassTile(x, y, Sprite.grass), new PortalTile(x, y, board, Sprite.portal), new WallTile(x, y, Sprite.wall)));
+                        board.addPath(y, x, 0);
                         break;
                     case '*':
                         board.addEntity(x + y * width,
@@ -79,30 +83,41 @@ public class FileLevel extends Level {
                                         new BrickTile(x, y, Sprite.brick)
                                 )
                         );
+                        board.addPath(y, x, 0);
                         break;
                     case 'p':
                         Player player = new Player(x * 16, y * 16 + Game.TILE_SIZE, board);
                         board.addMob(player);
                         board.setPlayer(player);
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                     case '1':
                         board.addMob(new Balloom(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(x + y * width, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                     case '2':
                         board.addMob(new Oneal(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                     case '3':
                         board.addMob(new Kondoria(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
+                        break;
+                    case '4':
+                        board.addMob(new Doll(x * 16, y * 16 + Game.TILE_SIZE, board));
+                        board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                     case 'X':
                         board.addEntity(pos, new LayeredEntity(x, y,
                                 new GrassTile(x, y, Sprite.grass),
                                 new PortalTile(x, y, board, Sprite.portal),
                                 new BrickTile(x, y, Sprite.brick)));
+                        board.addPath(y, x, 0);
                         break;
                     case 'b':
                         LayeredEntity layer = new LayeredEntity(x, y,
@@ -110,6 +125,7 @@ public class FileLevel extends Level {
                                 new bombItem(x, y, Sprite.powerup_bombs),
                                 new BrickTile(x, y, Sprite.brick));
                         board.addEntity(pos, layer);
+                        board.addPath(y, x, 0);
                         break;
                     case 'S':
                         layer = new LayeredEntity(x, y,
@@ -117,6 +133,7 @@ public class FileLevel extends Level {
                                 new speedItem(x, y, Sprite.powerup_speed),
                                 new BrickTile(x, y, Sprite.brick));
                         board.addEntity(pos, layer);
+                        board.addPath(y, x, 0);
                         break;
                     case 'f':
                         layer = new LayeredEntity(x, y,
@@ -124,9 +141,11 @@ public class FileLevel extends Level {
                                 new flameItem(x, y, Sprite.powerup_flames),
                                 new BrickTile(x, y, Sprite.brick));
                         board.addEntity(pos, layer);
+                        board.addPath(y, x, 0);
                         break;
                     default:
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
+                        board.addPath(y, x, 1);
                         break;
                 }
             }
