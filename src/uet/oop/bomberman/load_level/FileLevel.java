@@ -1,11 +1,11 @@
 package uet.oop.bomberman.load_level;
 
-import uet.oop.bomberman.Board;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.entities.mob.enemy.Balloom;
-import uet.oop.bomberman.entities.mob.enemy.Minvo;
+import uet.oop.bomberman.entities.mob.enemy.Kondoria;
 import uet.oop.bomberman.entities.mob.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.GrassTile;
 import uet.oop.bomberman.entities.tile.PortalTile;
@@ -26,7 +26,7 @@ public class FileLevel extends Level {
 
     private static char[][] map;
 
-    public FileLevel(int level, Board board) throws LoadLevelExceptions {
+    public FileLevel(int level, DashBoard board) throws LoadLevelExceptions {
         super(level, board);
     }
 
@@ -95,7 +95,7 @@ public class FileLevel extends Level {
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
                         break;
                     case '3':
-                        board.addMob(new Minvo(x * 16, y * 16 + Game.TILE_SIZE, board));
+                        board.addMob(new Kondoria(x * 16, y * 16 + Game.TILE_SIZE, board));
                         board.addEntity(pos, new GrassTile(x, y, Sprite.grass));
                         break;
                     case 'X':

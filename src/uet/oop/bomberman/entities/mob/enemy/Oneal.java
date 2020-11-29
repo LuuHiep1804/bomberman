@@ -1,48 +1,67 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
-import uet.oop.bomberman.Board;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Oneal extends Enemy{
+import java.util.Random;
 
-    private int timeDelay =  50;
+public class Oneal extends Enemy {
+
+    private int timeDelay = 50;
     Player player = (Player) board.getPlayer();
+    private boolean movingAi;
+    private double speedAi;
+    private Random ran = new Random();
 
-    public Oneal(int x, int y, Board board) {
+    public Oneal(int x, int y, DashBoard board) {
         super(x, y, board);
         speed = 0.5;
-        moving = false;
+        speedAi = 1.0;
+        movingAi = false;
         sprite = Sprite.oneal_left1;
     }
 
     @Override
     public void move() {
-        if (!tileCollision(0, -speed) && x - 9 < player.getX() && x + 12 > player.getX() && y > player.getY()) {
-            moving = true;
-            dir = 3;
-        } else if (!tileCollision(0, speed) && x - 9 < player.getX() && x + 12 > player.getX() && y < player.getY()) {
-            moving = true;
-            dir = 2;
-        } else if (!tileCollision(speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x < player.getX()) {
-            moving = true;
-            dir = 1;
-        } else if (!tileCollision(-speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x > player.getX()) {
-            moving = true;
-            dir = 0;
-        } else {
-            moving = false;
-        }
-        if (dir == 0 && moving == true) {
-            x -= speed;
-        } else if (dir == 1 && moving == true) {
-            x += speed;
-        } else if (dir == 2 && moving == true) {
-            y += speed;
-        } else if (dir == 3 && moving == true) {
-            y -= speed;
+        if (alive) {
+            if (!tileCollision(0, -speed) && x - 9 < player.getX() && x + 12 > player.getX() && y > player.getY()) {
+                movingAi = true;
+                dir = 3;
+            } else if (!tileCollision(0, speed) && x - 9 < player.getX() && x + 12 > player.getX() && y < player.getY()) {
+                movingAi = true;
+                dir = 2;
+            } else if (!tileCollision(speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x < player.getX()) {
+                movingAi = true;
+                dir = 1;
+            } else if (!tileCollision(-speed, 0) && y - 16 < player.getY() && y + 15 > player.getY() && x > player.getX()) {
+                movingAi = true;
+                dir = 0;
+            } else {
+                movingAi = false;
+            }
+            if (dir == 0 && movingAi) {
+                x -= speedAi;
+            } else if (dir == 1 && movingAi) {
+                x += speedAi;
+            } else if (dir == 2 && movingAi) {
+                y += speedAi;
+            } else if (dir == 3 && movingAi) {
+                y -= speedAi;
+            } else {
+                if (!tileCollision(6, 0) && dir == 0) {
+                    x += speed;
+                } else if (!tileCollision(-speed, 0) && dir == 1) {
+                    x -= speed;
+                } else if (!tileCollision(0, 3) && dir == 2) {
+                    y += speed;
+                } else if (!tileCollision(0, -4) && dir == 3) {
+                    y -= speed;
+                } else {
+                    dir = ran.nextInt(4);
+                }
+            }
         }
     }
 
@@ -51,7 +70,7 @@ public class Oneal extends Enemy{
         if (!alive) {
             if (timeDelay > 0) {
                 timeDelay--;
-            }else {
+            } else {
                 remove();
             }
         }
@@ -63,7 +82,7 @@ public class Oneal extends Enemy{
         if (alive) {
             chooseSprite();
             super.render(screen);
-        }else {
+        } else {
             sprite = Sprite.oneal_dead;
             sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, anim, 60);
             super.render(screen);

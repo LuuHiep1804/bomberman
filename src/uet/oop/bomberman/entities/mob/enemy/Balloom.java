@@ -1,8 +1,6 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
-import com.sun.xml.internal.ws.policy.sourcemodel.PolicyModelGenerator;
-import uet.oop.bomberman.Board;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -13,7 +11,7 @@ public class Balloom extends Enemy{
     private Random ran = new Random();
     private int timeDelay = 50;
 
-    public Balloom(int x, int y, Board board) {
+    public Balloom(int x, int y, DashBoard board) {
         super(x, y, board);
         speed = 0.5;
         moving = true;

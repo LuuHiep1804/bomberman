@@ -1,10 +1,12 @@
 package uet.oop.bomberman.entities.mob;
 
-import uet.oop.bomberman.Board;
+import uet.oop.bomberman.DashBoard;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
+import uet.oop.bomberman.entities.mob.enemy.Enemy;
+import uet.oop.bomberman.game_sound.GameSound;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
@@ -31,7 +33,7 @@ public class Player extends Mob {
     public Keyboard input;
     public List<Bomb> bombs;
 
-    public Player(int x, int y, Board board) {
+    public Player(int x, int y, DashBoard board) {
         super(x, y, board);
         sprite = Sprite.player_right;
         this.input = board.getInput();
@@ -121,6 +123,7 @@ public class Player extends Mob {
             board.addBomb(bomb);
             timeBetweenPutBombs = 30;
             Game.removeBombRate();
+            GameSound.play("newbomb");
         }
     }
 
@@ -146,11 +149,16 @@ public class Player extends Mob {
             return;
         }
         alive = false;
+        GameSound.play("bomber_die");
     }
 
     @Override
     public boolean checkCollision(Entity e) {
         if (e instanceof FlameSegment) {
+            kill();
+            return true;
+        }
+        if (e instanceof Enemy) {
             kill();
             return true;
         }

@@ -1,11 +1,13 @@
 package uet.oop.bomberman.entities.mob.enemy;
 
-import uet.oop.bomberman.Board;
+import uet.oop.bomberman.DashBoard;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.mob.Mob;
+import uet.oop.bomberman.entities.mob.Player;
+import uet.oop.bomberman.game_sound.GameSound;
 import uet.oop.bomberman.graphics.Screen;
-import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
@@ -20,7 +22,7 @@ public abstract class Enemy extends Mob {
     protected boolean alive = true;
 
 
-    public Enemy(int x, int y, Board board) {
+    public Enemy(int x, int y, DashBoard board) {
         super(x, y, board);
         random = new Random();
     }
@@ -47,6 +49,7 @@ public abstract class Enemy extends Mob {
             return;
         }else {
             alive = false;
+            GameSound.play("monster_die");
         }
     }
 
@@ -55,6 +58,9 @@ public abstract class Enemy extends Mob {
         if (e instanceof FlameSegment) {
             kill();
             return true;
+        }
+        if (e instanceof Player) {
+            ((Player) e).kill();
         }
         return false;
     }
