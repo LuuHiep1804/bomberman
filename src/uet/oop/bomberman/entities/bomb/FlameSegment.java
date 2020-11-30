@@ -60,7 +60,8 @@ public class FlameSegment extends Entity {
             if (dir == 3) x--;
             Entity e = board.getTile(x, y);
             Entity m = board.getMob(x, y, null);
-            if (e.checkCollision(this) || m != null && m.checkCollision(this)) {
+            Bomb b = board.getBomb(x, y);
+            if (e.checkCollision(this) || m != null && m.checkCollision(this) || b != null && b.checkCollision(this)) {
                 break;
             }
             radius++;

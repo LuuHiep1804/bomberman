@@ -89,6 +89,11 @@ public class Bomb extends Entity {
             return allowedToMove;
         }
 
+        if (e instanceof FlameSegment) {
+            bombCounter = 0;
+            return false;
+        }
+
         return true;
     }
 
