@@ -30,6 +30,7 @@ public class GameSound {
                                 Main.class.getResourceAsStream("/sound/" + sound + ".mid"));
                         clip.open(inputStream);
                         clip.start();
+                        clip.loop(Clip.LOOP_CONTINUOUSLY);
                     } catch (Exception e) {
                         System.err.println(e.getMessage());
                     }

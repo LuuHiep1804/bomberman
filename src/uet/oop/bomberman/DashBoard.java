@@ -5,6 +5,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.mob.Mob;
+import uet.oop.bomberman.entities.mob.Player;
 import uet.oop.bomberman.exceptions.LoadLevelExceptions;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -38,10 +39,6 @@ public class DashBoard implements IRender{
         loadLevel(1);
     }
 
-    public Level getLevel() {
-        return levelLoader;
-    }
-
     public Game getGame() {
         return game;
     }
@@ -66,8 +63,16 @@ public class DashBoard implements IRender{
         this.itemAt = itemAt;
     }
 
+    public void updateLevel() {
+        Game.setBombRange(1);
+        Game.setBombRate(1);
+        Game.setSpeed(1.0);
+        loadLevel(levelLoader.getLevel() + 1);
+    }
+
     @Override
     public void update() {
+        if (game.isPause()) return;
         updateEntities();
         updateMob();
         updateBomb();
@@ -77,6 +82,7 @@ public class DashBoard implements IRender{
 
     @Override
     public void render(Screen screen) {
+        if (game.isPause()) return;
         int x0 = Screen.xOffset >> 4;
         int x1 = (Screen.xOffset + screen.getWidth() + Game.TILE_SIZE) / Game.TILE_SIZE;
         int y0 = Screen.yOffset >> 4;
@@ -94,6 +100,9 @@ public class DashBoard implements IRender{
 
 
     public void loadLevel(int level){
+        game.pause();
+        listMob.clear();
+        listBomb.clear();
         try{
             levelLoader = new FileLevel(level, this);
             entities = new Entity[levelLoader.getWidth() * levelLoader.getHeight()];
@@ -117,6 +126,7 @@ public class DashBoard implements IRender{
     }
 
     public void updateEntities() {
+        if (game.isPause()) return;
         for (int i = 0; i < entities.length; i++) {
             entities[i].update();
         }
@@ -139,9 +149,10 @@ public class DashBoard implements IRender{
     }
 
     protected void updateMob() {
+        if (game.isPause()) return;
         Iterator<Mob> itr = listMob.iterator();
 
-        while(itr.hasNext()) {
+        while(itr.hasNext() && !game.isPause()) {
             itr.next().update();
         }
     }
@@ -184,6 +195,7 @@ public class DashBoard implements IRender{
     }
 
     public void updateBomb() {
+        if (game.isPause()) return;;
         Iterator<Bomb> itr = listBomb.iterator();
         while (itr.hasNext()) {
             itr.next().update();

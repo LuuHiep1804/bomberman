@@ -23,10 +23,19 @@ public class Game extends Canvas {
     private DashBoard board;
     private Screen screen;
     private Frame frame;
-    private static int bombRange = 2;
+    private static int bombRange = 1;
     private static double speed = 1.0;
     private static int bombRate = 1;
     private int timeMusic = 2760;
+    private boolean pause = true;
+
+    public void pause() {
+        pause = true;
+    }
+
+    public boolean isPause() {
+        return pause;
+    }
 
     public static int getBombRange() {
         return bombRange;
@@ -36,12 +45,22 @@ public class Game extends Canvas {
         bombRange = 2;
     }
 
+    public static void setBombRange(int a) {bombRange = a;}
+
     public static int getBombRate() {
         return bombRate;
     }
 
     public static void addBombRate() {
         bombRate++ ;
+    }
+
+    public static void setBombRate(int a) {
+        bombRate = a;
+    }
+
+    public static void setSpeed(double a) {
+        speed = a;
     }
 
     public static void removeBombRate() {
@@ -113,10 +132,14 @@ public class Game extends Canvas {
             lastTime = now;
 
             while (delta >= 1) {
-                update();
+                    update();
                 delta--;
             }
-            renderGame();
+            if (pause) {
+                pause = false;
+            }else {
+                renderGame();
+            }
         }
     }
 
